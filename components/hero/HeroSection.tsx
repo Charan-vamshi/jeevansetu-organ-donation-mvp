@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   fadeUp,
@@ -35,9 +36,11 @@ export default function HeroSection() {
               Donate
             </motion.button>
 
-            <motion.button {...buttonGlow} className="glass-button">
-              Help
-            </motion.button>
+            <Link href="/help">
+              <motion.button {...buttonGlow} className="glass-button">
+                Help
+              </motion.button>
+            </Link>
           </div>
         </motion.div>
       </div>
