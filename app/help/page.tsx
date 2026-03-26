@@ -5,21 +5,22 @@ export default function HelpPage() {
         Help & Contact
       </h1>
 
-      {/* Information */}
+      {/* Info Section */}
       <div className="glass p-6 mb-8">
         <h2 className="text-xl text-white font-semibold mb-3">
           About JeevanSetu
         </h2>
 
         <p className="text-gray-400 leading-relaxed">
-          JeevanSetu is a demo platform created for awareness and academic
-          purposes. This system demonstrates how organ donation requests,
-          hospital assignments, and approvals work in a simplified environment.
-          No real organ transactions or medical data are used.
+          JeevanSetu is a conceptual platform designed to demonstrate how
+          organ donation systems can be digitized for better coordination
+          between donors, hospitals, and patients. This project focuses on
+          awareness, request management, and hospital assignment workflows
+          in a simplified environment.
         </p>
       </div>
 
-      {/* Contact Details */}
+      {/* Contact Section */}
       <div className="glass p-6">
         <h2 className="text-xl text-white font-semibold mb-4">
           Contact Information
@@ -28,22 +29,22 @@ export default function HelpPage() {
         <div className="space-y-3 text-gray-300">
           <p>
             <span className="text-gray-400">Organization:</span>{" "}
-            Reddy Network
+            JeevanSetu Organ Donation Network
           </p>
 
           <p>
             <span className="text-gray-400">Phone:</span>{" "}
-            +91 6364701263
+            +91 98765 43210
           </p>
 
           <p>
             <span className="text-gray-400">Email:</span>{" "}
-            reddy@gmail.com
+            support@jeevansetu.org
           </p>
 
           <p>
             <span className="text-gray-400">Location:</span>{" "}
-            Yamalokam near Dharidhralokam
+            Bengaluru, Karnataka, India
           </p>
 
           <p>
@@ -53,9 +54,10 @@ export default function HelpPage() {
         </div>
       </div>
 
+      {/* Disclaimer */}
       <p className="text-gray-500 text-sm mt-8">
-        This project is created for demonstration purposes only and does not
-        represent a real organ donation system.
+        This project is created for demonstration and educational purposes only.
+        It does not represent a real organ donation system or medical service.
       </p>
     </main>
   );
