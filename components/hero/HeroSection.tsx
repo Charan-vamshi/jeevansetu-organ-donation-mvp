@@ -28,14 +28,19 @@ export default function HeroSection() {
           </p>
 
           <div className="flex justify-center gap-4 mt-8">
-            <motion.button {...buttonGlow} className="glass-button">
-              Request
-            </motion.button>
+            {/* Request */}
+            <Link href="/request">
+              <motion.button {...buttonGlow} className="glass-button">
+                Request
+              </motion.button>
+            </Link>
 
+            {/* Donate (you can connect later) */}
             <motion.button {...buttonGlow} className="glass-button">
               Donate
             </motion.button>
 
+            {/* Help */}
             <Link href="/help">
               <motion.button {...buttonGlow} className="glass-button">
                 Help
