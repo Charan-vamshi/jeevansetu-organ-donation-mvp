@@ -48,8 +48,19 @@ export default function RequestTable() {
               <td>{req.organ}</td>
               <td>{req.bloodGroup}</td>
               <td>{req.urgency}</td>
-              <td>{req.status}</td>
-
+              <td>
+                <span
+                  className={`px-3 py-1 rounded-full text-sm ${
+                    req.status === "Pending"
+                      ? "bg-gray-600 text-white"
+                      : req.status === "Assigned"
+                      ? "bg-blue-600 text-white"
+                      : "bg-green-600 text-white"
+                  }`}
+                >
+                  {req.status}
+                </span>
+              </td>
               <td>
                 <select
                   className="bg-[#0B0F14] border border-white/10 p-2 rounded"

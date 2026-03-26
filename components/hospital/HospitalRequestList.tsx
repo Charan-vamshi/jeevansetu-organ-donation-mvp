@@ -31,6 +31,7 @@ export default function HospitalRequestList() {
             <th>Organ</th>
             <th>Blood Group</th>
             <th>Urgency</th>
+            <th>Hospital</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -43,15 +44,32 @@ export default function HospitalRequestList() {
               <td>{req.organ}</td>
               <td>{req.bloodGroup}</td>
               <td>{req.urgency}</td>
-              <td>{req.status}</td>
+              <td>{req.hospital}</td>
+
+              {/* Status Badge */}
+              <td>
+                <span
+                  className={`px-3 py-1 rounded-full text-sm ${
+                    req.status === "Pending"
+                      ? "bg-gray-600 text-white"
+                      : req.status === "Assigned"
+                      ? "bg-blue-600 text-white"
+                      : "bg-green-600 text-white"
+                  }`}
+                >
+                  {req.status}
+                </span>
+              </td>
 
               <td>
-                <button
-                  onClick={() => approveRequest(req.id)}
-                  className="glass-button"
-                >
-                  Approve
-                </button>
+                {req.status !== "Approved" && (
+                  <button
+                    onClick={() => approveRequest(req.id)}
+                    className="glass-button"
+                  >
+                    Approve
+                  </button>
+                )}
               </td>
             </tr>
           ))}
