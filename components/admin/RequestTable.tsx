@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { requests as globalRequests } from "@/data/store";
 
 const hospitals = [
   "Apollo Hospital",
@@ -10,38 +11,20 @@ const hospitals = [
   "Aster CMI",
 ];
 
-const initialRequests = [
-  {
-    id: 1,
-    name: "Ravi Kumar",
-    organ: "Kidney",
-    bloodGroup: "O+",
-    urgency: "High",
-    status: "Pending",
-    hospital: "",
-  },
-  {
-    id: 2,
-    name: "Anita Sharma",
-    organ: "Liver",
-    bloodGroup: "A+",
-    urgency: "Medium",
-    status: "Pending",
-    hospital: "",
-  },
-];
-
 export default function RequestTable() {
-  const [requests, setRequests] = useState(initialRequests);
+  const [requests, setRequests] = useState(globalRequests);
 
   const assignHospital = (id: number, hospital: string) => {
-    setRequests((prev) =>
-      prev.map((req) =>
-        req.id === id
-          ? { ...req, hospital, status: "Assigned" }
-          : req
-      )
+    const updated = requests.map((req) =>
+      req.id === id
+        ? { ...req, hospital, status: "Assigned" }
+        : req
     );
+
+    setRequests(updated);
+
+    // update global store
+    globalRequests.splice(0, globalRequests.length, ...updated);
   };
 
   return (

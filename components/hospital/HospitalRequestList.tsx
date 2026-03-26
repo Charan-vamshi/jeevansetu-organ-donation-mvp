@@ -1,38 +1,26 @@
 "use client";
 
 import { useState } from "react";
-
-const initialRequests = [
-  {
-    id: 1,
-    name: "Ravi Kumar",
-    organ: "Kidney",
-    bloodGroup: "O+",
-    urgency: "High",
-    status: "Assigned",
-    hospital: "Apollo Hospital",
-  },
-  {
-    id: 2,
-    name: "Anita Sharma",
-    organ: "Liver",
-    bloodGroup: "A+",
-    urgency: "Medium",
-    status: "Assigned",
-    hospital: "Manipal Hospital",
-  },
-];
+import { requests as globalRequests } from "@/data/store";
 
 export default function HospitalRequestList() {
-  const [requests, setRequests] = useState(initialRequests);
+  const [requests, setRequests] = useState(globalRequests);
 
   const approveRequest = (id: number) => {
-    setRequests((prev) =>
-      prev.map((req) =>
-        req.id === id ? { ...req, status: "Approved" } : req
-      )
+    const updated = requests.map((req) =>
+      req.id === id ? { ...req, status: "Approved" } : req
     );
+
+    setRequests(updated);
+
+    // update global store
+    globalRequests.splice(0, globalRequests.length, ...updated);
   };
+
+  // show only assigned requests
+  const assignedRequests = requests.filter(
+    (req) => req.status === "Assigned"
+  );
 
   return (
     <div className="glass p-6 overflow-x-auto">
@@ -49,7 +37,7 @@ export default function HospitalRequestList() {
         </thead>
 
         <tbody>
-          {requests.map((req) => (
+          {assignedRequests.map((req) => (
             <tr key={req.id} className="border-b border-white/5">
               <td className="py-3">{req.name}</td>
               <td>{req.organ}</td>
@@ -58,14 +46,12 @@ export default function HospitalRequestList() {
               <td>{req.status}</td>
 
               <td>
-                {req.status !== "Approved" && (
-                  <button
-                    onClick={() => approveRequest(req.id)}
-                    className="glass-button"
-                  >
-                    Approve
-                  </button>
-                )}
+                <button
+                  onClick={() => approveRequest(req.id)}
+                  className="glass-button"
+                >
+                  Approve
+                </button>
               </td>
             </tr>
           ))}
