@@ -1,5 +1,6 @@
 "use client";
 
+import toast from "react-hot-toast";
 import { useState } from "react";
 import { addRequest } from "@/data/store";
 export default function RequestForm() {
@@ -32,7 +33,9 @@ export default function RequestForm() {
       urgency: "Low",
     });
 
-    alert("Request submitted successfully");
+    
+
+    toast.success("Request submitted");
   };
 
   return (

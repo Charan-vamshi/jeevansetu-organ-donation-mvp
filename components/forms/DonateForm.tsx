@@ -1,7 +1,8 @@
 "use client";
 
+import toast from "react-hot-toast";
 import { useState } from "react";
-import { requests } from "@/data/store";
+import { addRequest } from "@/data/store";
 
 export default function DonateForm() {
   const [form, setForm] = useState({
@@ -22,7 +23,8 @@ export default function DonateForm() {
       type: "donation" as const,
     };
 
-    requests.push(newDonation);
+
+    addRequest(newDonation);
 
     setForm({
       name: "",
@@ -30,7 +32,7 @@ export default function DonateForm() {
       bloodGroup: "",
     });
 
-    alert("Donation submitted successfully");
+    toast.success("Donation submitted");
   };
 
   return (

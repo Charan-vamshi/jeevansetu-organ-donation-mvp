@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -8,6 +8,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    // force fresh login (no auto session)
+    localStorage.removeItem("role");
+  }, []);
 
   const handleLogin = (e: any) => {
     e.preventDefault();
@@ -17,15 +22,22 @@ export default function LoginPage() {
     if (role === "admin") {
       localStorage.setItem("role", role);
       router.push("/admin");
-    } else if (role === "hospital") {
+      return;
+    }
+
+    if (role === "hospital") {
       localStorage.setItem("role", role);
       router.push("/hospital");
-    } else if (role === "user") {
-      localStorage.setItem("role", role);
-      router.push("/");
-    } else {
-      setError("Invalid username. Use admin / hospital / user");
+      return;
     }
+
+    if (role === "user") {
+      localStorage.setItem("role", role);
+      router.push("/organs");
+      return;
+    }
+
+    setError("Invalid credentials");
   };
 
   return (
@@ -43,7 +55,7 @@ export default function LoginPage() {
         )}
 
         <input
-          placeholder="Username (admin / hospital / user)"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="w-full p-3 rounded bg-[#0B0F14] border border-white/10 text-white"
@@ -52,7 +64,7 @@ export default function LoginPage() {
 
         <input
           type="password"
-          placeholder="Password (anything)"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full p-3 rounded bg-[#0B0F14] border border-white/10 text-white"

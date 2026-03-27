@@ -1,9 +1,18 @@
-import HeroSection from "@/components/hero/HeroSection";
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <main className="pt-24">
-      <HeroSection />
-    </main>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    // clear any existing role
+    localStorage.removeItem("role");
+
+    // always force login
+    router.push("/login");
+  }, []);
+
+  return null;
 }
