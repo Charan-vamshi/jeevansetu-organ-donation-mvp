@@ -18,7 +18,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 w-full z-50 bg-black/30 backdrop-blur-lg border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between">
 
-        <h1 className="text-white">JeevanSetu</h1>
+        <img src="/logo.svg" alt="logo" className="h-8" />
 
         <div className="flex gap-6 text-gray-300">
 
