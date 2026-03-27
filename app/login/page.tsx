@@ -33,7 +33,7 @@ export default function LoginPage() {
 
     if (role === "user") {
       localStorage.setItem("role", role);
-      router.push("/organs");
+      router.push("/dashboard");
       return;
     }
 
