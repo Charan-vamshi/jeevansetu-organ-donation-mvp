@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { requests } from "@/data/store";
-
+import { addRequest } from "@/data/store";
 export default function RequestForm() {
   const [form, setForm] = useState({
     name: "",
@@ -19,10 +18,11 @@ export default function RequestForm() {
       ...form,
       status: "Pending",
       hospital: "",
+      type: "request" as const,
     };
 
     // add to global store
-    requests.push(newRequest);
+    addRequest(newRequest);
 
     // reset form
     setForm({

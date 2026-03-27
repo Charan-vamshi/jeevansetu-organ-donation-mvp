@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { requests as globalRequests } from "@/data/store";
+import { useState, useEffect } from "react";
+import { Request } from "@/data/store";
+import { getRequests, saveRequests } from "@/data/store";
 
 const hospitals = [
   "Apollo Hospital",
@@ -12,7 +13,10 @@ const hospitals = [
 ];
 
 export default function RequestTable() {
-  const [requests, setRequests] = useState(globalRequests);
+  const [requests, setRequests] = useState<Request[]>([]);
+  useEffect(() => {
+    setRequests(getRequests());
+  }, []);
 
   const assignHospital = (id: number, hospital: string) => {
     const updated = requests.map((req) =>
@@ -24,7 +28,7 @@ export default function RequestTable() {
     setRequests(updated);
 
     // update global store
-    globalRequests.splice(0, globalRequests.length, ...updated);
+    saveRequests(updated);
   };
 
   return (

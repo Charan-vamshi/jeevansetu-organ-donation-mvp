@@ -6,25 +6,23 @@ export type Request = {
   urgency: string;
   status: string;
   hospital: string;
+  type: "request" | "donation";
 };
 
-export let requests: Request[] = [
-  {
-    id: 1,
-    name: "Ravi Kumar",
-    organ: "Kidney",
-    bloodGroup: "O+",
-    urgency: "High",
-    status: "Pending",
-    hospital: "",
-  },
-  {
-    id: 2,
-    name: "Anita Sharma",
-    organ: "Liver",
-    bloodGroup: "A+",
-    urgency: "Medium",
-    status: "Pending",
-    hospital: "",
-  },
-];
+const STORAGE_KEY = "jeevansetu_requests";
+
+export const getRequests = (): Request[] => {
+  if (typeof window === "undefined") return [];
+  const data = localStorage.getItem(STORAGE_KEY);
+  return data ? JSON.parse(data) : [];
+};
+
+export const saveRequests = (data: Request[]) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+};
+
+export const addRequest = (req: Request) => {
+  const current = getRequests();
+  current.push(req);
+  saveRequests(current);
+};

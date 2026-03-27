@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { requests as globalRequests } from "@/data/store";
+import { useState, useEffect } from "react";
+import { Request, getRequests, saveRequests } from "@/data/store";
 
 export default function HospitalRequestList() {
-  const [requests, setRequests] = useState(globalRequests);
+  const [requests, setRequests] = useState<Request[]>([]);
+
+  useEffect(() => {
+    setRequests(getRequests());
+  }, []);
 
   const approveRequest = (id: number) => {
     const updated = requests.map((req) =>
@@ -12,12 +16,10 @@ export default function HospitalRequestList() {
     );
 
     setRequests(updated);
-
-    // update global store
-    globalRequests.splice(0, globalRequests.length, ...updated);
+    saveRequests(updated);
   };
 
-  // show only assigned requests
+  // only assigned items
   const assignedRequests = requests.filter(
     (req) => req.status === "Assigned"
   );
@@ -46,15 +48,15 @@ export default function HospitalRequestList() {
               <td>{req.urgency}</td>
               <td>{req.hospital}</td>
 
-              {/* Status Badge */}
+              {/* Status badge */}
               <td>
                 <span
                   className={`px-3 py-1 rounded-full text-sm ${
                     req.status === "Pending"
-                      ? "bg-gray-600 text-white"
+                      ? "bg-gray-600"
                       : req.status === "Assigned"
-                      ? "bg-blue-600 text-white"
-                      : "bg-green-600 text-white"
+                      ? "bg-blue-600"
+                      : "bg-green-600"
                   }`}
                 >
                   {req.status}
