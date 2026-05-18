@@ -1,57 +1,70 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { hoverLift, fadeUp } from "@/components/animations/motionVariants";
 
-type OrganCardProps = {
-  name: string;
-  description: string;
-  image: string;
+const costMap: Record<string, string> = {
+  Kidney: "$10,000 – $20,000",
+  Heart: "$50,000 – $100,000",
+  Liver: "$40,000 – $80,000",
+  Lungs: "$30,000 – $60,000",
+  Pancreas: "$25,000 – $50,000",
+  Cornea: "$5,000 – $10,000",
 };
-
-const MotionDiv = motion.div as any;
 
 export default function OrganCard({
   name,
   description,
   image,
-}: OrganCardProps) {
+}: {
+  name: string;
+  description: string;
+  image: string;
+}) {
   return (
-    <Link href={`/organs/${name.toLowerCase()}`}>
-      <MotionDiv
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        {...hoverLift}
-        className="glass overflow-hidden cursor-pointer group max-w-sm mx-auto"
-      >
-        {/* Image */}
-        <div className="relative w-full h-56 overflow-hidden">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            sizes="(max-width: 768px) 100vw,
-                   (max-width: 1200px) 50vw,
-                   33vw"
-            className="object-contain bg-black transition-transform duration-500 group-hover:scale-110 group-hover:rotate-1"
-          />
+    <motion.div
+      whileHover={{ y: -6, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="relative glass rounded-2xl overflow-hidden group cursor-pointer
+                 border border-white/5 hover:border-white/15 transition-colors duration-300 flex flex-col"
+    >
+      {/* Image container — fixed height, no overflow */}
+      <div className="relative w-full h-52 bg-black/30 overflow-hidden shrink-0">
+        <Image
+          src={image}
+          alt={name}
+          fill
+          className="object-contain p-4 transition-transform duration-500 group-hover:scale-105 drop-shadow-xl"
+        />
+      </div>
+
+      {/* Content — sits below image, never overlaps */}
+      <div className="flex flex-col gap-3 p-5 flex-1">
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="text-white text-lg font-semibold tracking-wide">{name}</h3>
+          <span className="text-xs text-gray-500 uppercase tracking-widest font-medium border border-white/10 px-2 py-0.5 rounded-full whitespace-nowrap">
+            Transplant
+          </span>
         </div>
 
-        {/* Content */}
-        <div className="p-5">
-          <h3 className="text-xl font-semibold text-white">
-            {name}
-          </h3>
+        <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
 
-          <p className="text-gray-400 mt-2 text-sm leading-relaxed">
-            {description}
+        {/* Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mt-auto pt-3" />
+
+        {/* Cost row */}
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-gray-500 uppercase tracking-widest">Est. Surgery Cost</p>
+          <p className="text-sm font-semibold text-gray-400 group-hover:text-white transition-colors duration-300">
+            {costMap[name] ?? "N/A"}
           </p>
         </div>
-      </MotionDiv>
-    </Link>
+      </div>
+
+      {/* Bottom accent line */}
+      <div className="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full
+                      bg-gradient-to-r from-white/30 via-white/10 to-transparent
+                      transition-all duration-500 ease-out" />
+    </motion.div>
   );
 }
